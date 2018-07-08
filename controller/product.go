@@ -1,7 +1,7 @@
 package controller
 
 import (
-	. "supplyservice/dao"
+	. "supplyservice/models"
 	"net/http"
 	"github.com/gorilla/mux"
 	"encoding/json"
@@ -71,5 +71,3 @@ func DeleteProduct(w http.ResponseWriter, r *http.Request)  {
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 
 }
-
-
