@@ -47,8 +47,8 @@ func (d *DataObject) InsertTicket(ticket Ticket) error {
 	return err
 }
 
-func (d *DataObject) DeleteTicket(ticket Ticket) error{
-	err := db.C(TICKETS).Remove(&ticket)
+func (d *DataObject) DeleteTicket(id string) error {
+	err := db.C(TICKETS).RemoveId(bson.ObjectIdHex(id))
 	return err
 }
 
@@ -60,6 +60,17 @@ func (d *DataObject) UpdateTicket(ticket Ticket) error {
 func (d *DataObject) FindAllTransactions() ([]Transaction, error) {
 	var transactions []Transaction
 	err := db.C(TRANSACTIONS).Find(bson.M{}).All(&transactions)
+	//query := []bson.M{{
+	//	"$lookup": bson.M{ // lookup the documents table here
+	//		"from":         CONSUMERS,
+	//		"localField":   "consumer_id",
+	//		"foreignField": "_id",
+	//		"as":           "consumer",
+	//	}},
+	//	}
+	//
+	//pipe := collection.Pipe(query)
+	//err := pipe.All(&folders)
 	return transactions, err
 }
 
@@ -74,8 +85,8 @@ func (d *DataObject) InsertTransaction(transaction Transaction) error {
 	return err
 }
 
-func (d *DataObject) DeleteTransaction(transaction Transaction) error{
-	err := db.C(TRANSACTIONS).Remove(&transaction)
+func (d *DataObject) DeleteTransaction(id string) error{
+	err := db.C(TRANSACTIONS).RemoveId(bson.ObjectIdHex(id))
 	return err
 }
 
@@ -101,8 +112,8 @@ func (d *DataObject) InsertConsumer(consumer Consumer) error {
 	return err
 }
 
-func (d *DataObject) DeleteConsumer(consumer Consumer) error{
-	err := db.C(CONSUMERS).Remove(&consumer)
+func (d *DataObject) DeleteConsumer(id string) error{
+	err := db.C(CONSUMERS).RemoveId(bson.ObjectIdHex(id))
 	return err
 }
 
@@ -128,13 +139,13 @@ func (d *DataObject) InsertProduct(product Product) error {
 	return err
 }
 
-func (d *DataObject) DeleteProduct(product Product) error{
-	err := db.C(PRODUCTS).Remove(&product)
+func (d *DataObject) DeleteProduct(id string) error{
+	err := db.C(PRODUCTS).RemoveId(bson.ObjectIdHex(id))
 	return err
 }
 
 func (d *DataObject) UpdateProduct(product Product) error {
-	err := db.C(PRODUCTS).UpdateId(product.ID, &product)
+	err := db.C(PRODUCTS).UpdateId(product.ID, product)
 	return err
 }
 
@@ -155,8 +166,8 @@ func (d *DataObject) InsertPartner(partner Partner) error {
 	return err
 }
 
-func (d *DataObject) DeletePartner(partner Partner) error{
-	err := db.C(PARTNERS).Remove(&partner)
+func (d *DataObject) DeletePartner(id string) error{
+	err := db.C(PARTNERS).RemoveId(bson.ObjectIdHex(id))
 	return err
 }
 

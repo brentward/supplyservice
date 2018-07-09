@@ -43,8 +43,20 @@ func CreateProduct(w http.ResponseWriter, r *http.Request)  {
 }
 
 func UpdateProduct(w http.ResponseWriter, r *http.Request)  {
+	//params := mux.Vars(r)
+	//// Read body
+	//b, err := ioutil.ReadAll(r.Body)
+	//defer r.Body.Close()
+	//if err != nil {
+	//	respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+	//	return
+	//}
+	//
+	//// Unmarshal
+	//var prodmap map[string]*json.RawMessage
 	defer r.Body.Close()
 	var product Product
+	//var prodmap map[string]*json.RawMessage
 	if err := json.NewDecoder(r.Body).Decode(&product); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
@@ -58,13 +70,8 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request)  {
 }
 
 func DeleteProduct(w http.ResponseWriter, r *http.Request)  {
-	defer r.Body.Close()
-	var product Product
-	if err := json.NewDecoder(r.Body).Decode(&product); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
-		return
-	}
-	if err := dao.DeleteProduct(product); err != nil {
+	params := mux.Vars(r)
+	if err := dao.DeleteProduct(params["id"]); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}

@@ -58,13 +58,8 @@ func UpdatePartner(w http.ResponseWriter, r *http.Request)  {
 }
 
 func DeletePartner(w http.ResponseWriter, r *http.Request)  {
-	defer r.Body.Close()
-	var partner Partner
-	if err := json.NewDecoder(r.Body).Decode(&partner); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
-		return
-	}
-	if err := dao.DeletePartner(partner); err != nil {
+	params := mux.Vars(r)
+	if err := dao.DeletePartner(params["id"]); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}

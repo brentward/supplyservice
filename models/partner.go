@@ -3,9 +3,9 @@ package models
 import "github.com/globalsign/mgo/bson"
 
 type Partner struct {
-	ID bson.ObjectId `bson:"_id" json:"id"`
-	Name string `bson:"name" json:"name"`
-	Email string `bson:"email" json:"email"`
-	Active bool `bson:"active" json:"active"`
-	ProductIDs []bson.ObjectId `bson:"products" json:"products"`
+	ID bson.ObjectId `bson:"_id,omitempty" json:"id,omitempty"`
+	Name string `bson:"name,omitempty" json:"name,omitempty"`
+	Email string `bson:"email,omitempty" json:"email,omitempty"`
+	Active bool `bson:"active,omitempty" json:"active,omitempty"`
+	ProductIDs []bson.ObjectId `bson:"products,omitempty" json:"products,omitempty"`
 }

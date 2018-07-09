@@ -58,13 +58,8 @@ func UpdateConsumer(w http.ResponseWriter, r *http.Request)  {
 }
 
 func DeleteConsumer(w http.ResponseWriter, r *http.Request)  {
-	defer r.Body.Close()
-	var consumer Consumer
-	if err := json.NewDecoder(r.Body).Decode(&consumer); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
-		return
-	}
-	if err := dao.DeleteConsumer(consumer); err != nil {
+	params := mux.Vars(r)
+	if err := dao.DeleteConsumer(params["id"]); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}

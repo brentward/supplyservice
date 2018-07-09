@@ -3,10 +3,10 @@ package models
 import "github.com/globalsign/mgo/bson"
 
 type Consumer struct {
-	ID bson.ObjectId `bson:"_id" json:"id"`
-	Name string `bson:"name" json:"name"`
-	Email string `bson:"email" json:"email"`
-	Active bool `bson:"active" json:"active"`
-	Role string `bson:"role" json:"role"`
-	PartnerIDs []bson.ObjectId `bson:"partners" json:"partners"`
+	ID bson.ObjectId `bson:"_id,omitempty" json:"id,omitempty"`
+	Name string `bson:"name,omitempty" json:"name,omitempty"`
+	Email string `bson:"email,omitempty" json:"email,omitempty"`
+	Active bool `bson:"active,omitempty" json:"active,omitempty"`
+	Role string `bson:"role,omitempty" json:"role,omitempty"`
+	PartnerIDs []bson.ObjectId `bson:"partners,omitempty" json:"partners",omitempty`
 }
