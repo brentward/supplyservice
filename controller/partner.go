@@ -43,13 +43,14 @@ func CreatePartner(w http.ResponseWriter, r *http.Request)  {
 }
 
 func UpdatePartner(w http.ResponseWriter, r *http.Request)  {
+	params := mux.Vars(r)
 	defer r.Body.Close()
 	var partner Partner
 	if err := json.NewDecoder(r.Body).Decode(&partner); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.UpdatePartner(partner); err != nil {
+	if err := dao.UpdatePartner(params["id"], partner); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}

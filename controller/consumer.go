@@ -43,13 +43,14 @@ func CreateConsumer(w http.ResponseWriter, r *http.Request)  {
 }
 
 func UpdateConsumer(w http.ResponseWriter, r *http.Request)  {
+	params := mux.Vars(r)
 	defer r.Body.Close()
 	var consumer Consumer
 	if err := json.NewDecoder(r.Body).Decode(&consumer); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.UpdateConsumer(consumer); err != nil {
+	if err := dao.UpdateConsumer(params["id"], consumer); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}

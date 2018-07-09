@@ -43,13 +43,14 @@ func CreateTransaction(w http.ResponseWriter, r *http.Request)  {
 }
 
 func UpdateTransaction(w http.ResponseWriter, r *http.Request)  {
+	params := mux.Vars(r)
 	defer r.Body.Close()
 	var transaction Transaction
 	if err := json.NewDecoder(r.Body).Decode(&transaction); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.UpdateTransaction(transaction); err != nil {
+	if err := dao.UpdateTransaction(params["id"], transaction); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}

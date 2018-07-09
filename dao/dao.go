@@ -52,8 +52,8 @@ func (d *DataObject) DeleteTicket(id string) error {
 	return err
 }
 
-func (d *DataObject) UpdateTicket(ticket Ticket) error {
-	err := db.C(TICKETS).UpdateId(ticket.ID, &ticket)
+func (d *DataObject) UpdateTicket(id string, ticket Ticket) error {
+	err := db.C(TICKETS).UpdateId(bson.ObjectIdHex(id), bson.M{"$set": ticket})
 	return err
 }
 
@@ -90,8 +90,8 @@ func (d *DataObject) DeleteTransaction(id string) error{
 	return err
 }
 
-func (d *DataObject) UpdateTransaction(transaction Transaction) error {
-	err := db.C(TRANSACTIONS).UpdateId(transaction.ID, &transaction)
+func (d *DataObject) UpdateTransaction(id string, transaction Transaction) error {
+	err := db.C(TRANSACTIONS).UpdateId(bson.ObjectIdHex(id), bson.M{"$set": transaction})
 	return err
 }
 
@@ -117,8 +117,8 @@ func (d *DataObject) DeleteConsumer(id string) error{
 	return err
 }
 
-func (d *DataObject) UpdateConsumer(consumer Consumer) error {
-	err := db.C(CONSUMERS).UpdateId(consumer.ID, &consumer)
+func (d *DataObject) UpdateConsumer(id string, consumer Consumer) error {
+	err := db.C(CONSUMERS).UpdateId(bson.ObjectIdHex(id), bson.M{"$set": consumer})
 	return err
 }
 
@@ -144,8 +144,8 @@ func (d *DataObject) DeleteProduct(id string) error{
 	return err
 }
 
-func (d *DataObject) UpdateProduct(product Product) error {
-	err := db.C(PRODUCTS).UpdateId(product.ID, product)
+func (d *DataObject) UpdateProduct(id string, product interface{}) error {
+	err := db.C(PRODUCTS).UpdateId(bson.ObjectIdHex(id), bson.M{"$set": product})
 	return err
 }
 
@@ -171,7 +171,7 @@ func (d *DataObject) DeletePartner(id string) error{
 	return err
 }
 
-func (d *DataObject) UpdatePartner(partner Partner) error {
-	err := db.C(PARTNERS).UpdateId(partner.ID, &partner)
+func (d *DataObject) UpdatePartner(id string, partner Partner) error {
+	err := db.C(PARTNERS).UpdateId(bson.ObjectIdHex(id), bson.M{"$set": partner})
 	return err
 }

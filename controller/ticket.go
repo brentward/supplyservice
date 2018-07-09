@@ -43,13 +43,14 @@ func CreateTicket(w http.ResponseWriter, r *http.Request)  {
 }
 
 func UpdateTicket(w http.ResponseWriter, r *http.Request)  {
+	params := mux.Vars(r)
 	defer r.Body.Close()
 	var ticket Ticket
 	if err := json.NewDecoder(r.Body).Decode(&ticket); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.UpdateTicket(ticket); err != nil {
+	if err := dao.UpdateTicket(params["id"], ticket); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
